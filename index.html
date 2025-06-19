@@ -3,347 +3,654 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitcoin Trading Volume Volatility Analysis (Jan 2024 - Jun 2025)</title>
+    <title id="pageTitle">The World of Decentralized Finance: An Infographic</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: The infographic is structured as a single, scrollable narrative that guides the user from foundational concepts to advanced topics. It begins with a hook (Bitcoin's fixed supply), then covers Bitcoin and Blockchain fundamentals side-by-side. It flows into the operational aspects (Mining), the marketplace (DEXs), advanced tools (Swaps & Mixers), and finally, security (Multisig). This linear, top-to-bottom progression is ideal for an infographic format, as it builds knowledge layer by layer, making complex information digestible for a broad audience. -->
+    <!-- Visualization & Content Choices:
+        - Bitcoin's Supply -> Goal: Inform -> Viz/Method: Single Big Number -> Justification: A powerful, immediate hook to convey scarcity -> Library/Method: HTML/CSS.
+        - Blockchain Process -> Goal: Organize -> Viz/Method: HTML/CSS Flow Chart -> Justification: Visually simplifies the complex, sequential process of block creation and linking -> Library/Method: HTML/CSS.
+        - DEX Architectures -> Goal: Compare -> Viz/Method: Donut Chart -> Justification: Effectively shows the composition/prevalence of different DEX types, highlighting AMMs' dominance -> Library/Method: Chart.js/Canvas.
+        - DEX vs. CEX -> Goal: Compare -> Viz/Method: Side-by-side feature comparison with icons -> Justification: More visually engaging than a table for comparing key dichotomies -> Library/Method: HTML/CSS with Unicode icons.
+        - Atomic Swaps vs. Bridges -> Goal: Compare -> Viz/Method: Grouped Bar Chart -> Justification: Directly compares the two on key metrics (Security, Compatibility), making trade-offs clear -> Library/Method: Chart.js/Canvas.
+        - Multisig Wallets -> Goal: Compare -> Viz/Method: Bar Chart -> Justification: Clearly illustrates the security advantage of multisig over single-key wallets across different risk factors -> Library/Method: Chart.js/Canvas.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 320px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 380px;
-            }
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -1px;
-            top: 2rem;
-            bottom: -2rem;
-            width: 2px;
-            background-color: #4A5568;
-        }
-         .timeline-item:last-child::before {
-            display: none;
-        }
-        .timeline-marker {
-            position: absolute;
-            left: -8px;
-            top: 2rem;
-            height: 18px;
-            width: 18px;
-            background-color: #FFC300;
-            border-radius: 50%;
-            border: 3px solid #1a1a2e;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); padding: 1.5rem; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .palette-bg-darkest { background-color: #003587; }
+        .palette-bg-dark { background-color: #0053A1; }
+        .palette-bg-medium { background-color: #0072BB; }
+        .palette-bg-light { background-color: #008DD5; }
+        .palette-bg-lightest { background-color: #00A1E4; }
+        .palette-text-darkest { color: #003587; }
+        .palette-text-lightest { color: #00A1E4; }
+        .section-title { color: #003587; }
     </style>
 </head>
-<body class="bg-[#1a1a2e] text-gray-200">
+<body class="text-gray-800">
 
     <div class="container mx-auto p-4 md:p-8">
-
-        <header class="text-center mb-12 md:mb-20">
-            <h1 class="text-4xl md:text-6xl font-black text-white mb-4">The Great <span class="text-[#FFC300]">Volume</span> Shake-Up</h1>
-            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">An 18-month analysis of Bitcoin's trading volume reveals a market transformed by institutional adoption, halving events, and shifting investor sentiment.</p>
+        
+        <header class="text-center my-8 md:my-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold section-title tracking-tight" id="mainTitle">A Visual Guide to the Decentralized World</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto" id="mainSubtitle">From Bitcoin's birth to the complex systems of modern DeFi, this infographic breaks down the core technologies building a new digital economy.</p>
+            <button id="languageToggle" class="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-200">Italiano</button>
         </header>
 
-        <main class="space-y-16 md:space-y-24">
+        <section class="my-16">
+            <div class="text-center">
+                <p class="text-xl text-gray-600" id="bitcoinSupplyText1">Bitcoin introduced the concept of digital scarcity. There will only ever be:</p>
+                <div class="text-7xl md:text-9xl font-extrabold palette-text-lightest my-4">21 Million</div>
+                <p class="text-xl text-gray-600 mb-4" id="bitcoinSupplyText2">Total Bitcoins in existence, a core principle that makes it resistant to inflation.</p>
+                <p class="text-md text-gray-500 max-w-2xl mx-auto" id="bitcoinSupplyEnforcement">This limit is hardcoded into Bitcoin's protocol and enforced by the network through a process called "halving," which periodically reduces the reward for mining new Bitcoins. Any change would require widespread consensus, making alterations extremely difficult.</p>
+            </div>
+        </section>
 
-            <section id="etf-catalyst" class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div class="md:col-span-1 text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">The ETF Catalyst</h2>
-                    <p class="text-gray-400 mb-6">The approval of US Spot Bitcoin ETFs in January 2024 was a monumental event, unleashing a torrent of institutional capital and fundamentally altering market dynamics. This single event was the primary driver behind the most significant volume surge in years.</p>
-                    <div class="bg-[#581845]/50 rounded-lg p-6 text-center">
-                        <p class="text-lg text-[#DAF7A6]">Q1 2024 Spot Volume Growth (QoQ)</p>
-                        <p class="text-7xl font-black text-white">+95.3%</p>
+        <section class="my-20 md:my-28">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title" id="foundationTitle">The Foundation: Bitcoin & Blockchain</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto" id="foundationSubtitle">Bitcoin was the first application, but Blockchain is the revolutionary technology that makes it all possible. Here's how they work together.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="space-y-6">
+                    <div class="card flex items-start gap-4">
+                        <div class="text-3xl">🌐</div>
+                        <div>
+                            <h3 class="font-bold text-lg" id="decentralizationTitle">Decentralization</h3>
+                            <p class="text-gray-600" id="decentralizationText">No single company or government controls it. The network is run by thousands of computers worldwide.</p>
+                        </div>
+                    </div>
+                    <div class="card flex items-start gap-4">
+                        <div class="text-3xl">⛓️</div>
+                        <div>
+                            <h3 class="font-bold text-lg" id="immutabilityTitle">Immutability</h3>
+                            <p class="text-gray-600" id="immutabilityText">Once a transaction is recorded, it cannot be changed or deleted, creating a permanent and trustworthy record.</p>
+                        </div>
+                    </div>
+                    <div class="card flex items-start gap-4">
+                        <div class="text-3xl">🔑</div>
+                        <div>
+                            <h3 class="font-bold text-lg" id="cryptoSecurityTitle">Cryptographic Security</h3>
+                            <p class="text-gray-600" id="cryptoSecurityText">Advanced cryptography secures every transaction, ensuring only the owner of the funds can spend them.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="md:col-span-1 bg-[#2c2c54] p-4 md:p-6 rounded-lg shadow-2xl">
-                    <h3 class="text-xl font-bold text-center text-white mb-4">Quarterly Spot Trading Volume</h3>
-                    <div class="chart-container">
-                        <canvas id="quarterlyVolumeChart"></canvas>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-4 text-center">This chart illustrates the dramatic spike in trading volume in Q1 2024, followed by periods of deceleration and renewed acceleration, highlighting the market's fluctuating intensity.</p>
-                </div>
-            </section>
-
-            <section id="timeline">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 text-center">A Timeline of Market-Moving Events</h2>
-                <div class="relative max-w-3xl mx-auto">
-                    <div class="space-y-8">
-
-                        <div class="relative pl-8 timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="bg-[#2c2c54] p-6 rounded-lg shadow-lg">
-                                <p class="font-bold text-lg text-[#FF5733]">Jan 2024: US Spot Bitcoin ETFs Approved</p>
-                                <p class="text-gray-400">Triggered unprecedented institutional inflows and initiated a period of maximum volume volatility as the market absorbed new, large-scale participants.</p>
-                            </div>
+                <div class="card palette-bg-darkest text-white">
+                    <h3 class="text-xl font-bold text-center mb-6" id="blockchainFormsTitle">How a Blockchain Forms</h3>
+                    <div class="flex flex-col items-center space-y-2">
+                        <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p id="blockchainStep1">1. A transaction is requested.</p>
                         </div>
-
-                        <div class="relative pl-8 timeline-item">
-                            <div class="timeline-marker"></div>
-                             <div class="bg-[#2c2c54] p-6 rounded-lg shadow-lg">
-                                <p class="font-bold text-lg text-[#FFC300]">Apr 2024: The Bitcoin Halving</p>
-                                <p class="text-gray-400">A muted volume response suggested the event was largely priced in, contributing to a market deceleration and a period of lower volume volatility in Q2 2024.</p>
-                            </div>
+                        <div class="font-mono text-2xl">↓</div>
+                         <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p id="blockchainStep2">2. It's broadcast to a network of computers (nodes).</p>
                         </div>
-                        
-                        <div class="relative pl-8 timeline-item">
-                            <div class="timeline-marker"></div>
-                             <div class="bg-[#2c2c54] p-6 rounded-lg shadow-lg">
-                                <p class="font-bold text-lg text-[#DAF7A6]">Nov 2024: US Election & Pro-Crypto Stance</p>
-                                <p class="text-gray-400">Donald Trump's win sparked a crypto rally, fueling optimism and a renewed surge in trading volumes and speculative interest in Q4 2024.</p>
-                            </div>
+                        <div class="font-mono text-2xl">↓</div>
+                         <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p id="blockchainStep3">3. The network validates the transaction using consensus rules.</p>
                         </div>
-
-                        <div class="relative pl-8 timeline-item">
-                            <div class="timeline-marker"></div>
-                            <div class="bg-[#2c2c54] p-6 rounded-lg shadow-lg">
-                                <p class="font-bold text-lg text-[#C70039]">Q2 2025: Market Consolidation</p>
-                                <p class="text-gray-400">A "significant reset" phase began, with defensive investor sentiment leading to lower overall activity and a more predictable, low-volatility environment.</p>
-                            </div>
+                        <div class="font-mono text-2xl">↓</div>
+                         <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p id="blockchainStep4">4. The verified transaction is combined with others into a "block".</p>
                         </div>
-
+                        <div class="font-mono text-2xl">↓</div>
+                         <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p id="blockchainStep5">5. The new block is cryptographically linked to the previous one, forming a secure chain.</p>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="volatility-analysis">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 text-center">Volatility Peaks and Troughs</h2>
-                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-10">The 30-day moving average of volume volatility smooths out daily noise, revealing the true underlying trends in market predictability. The period saw clear, distinct regimes of high and low volume stability.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                    <div class="bg-[#003f5c] p-6 rounded-lg text-center shadow-2xl">
-                        <p class="text-xl font-bold text-white mb-2">MAXIMUM VOLATILITY</p>
-                        <p class="text-4xl font-black text-[#FF5733]">Q1 2024</p>
-                        <p class="text-gray-300 mt-2">Driven by ETF-related liquidity discovery and intense market adjustment.</p>
+        <section class="my-20 md:my-28">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title" id="miningTitle">The Engine Room: Bitcoin Mining</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto" id="miningSubtitle">Mining is the process that secures the network and creates new coins. It's a competitive race powered by a mechanism called Proof-of-Work (PoW).</p>
+            </div>
+            <div class="card md:col-span-2">
+                <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4 text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="text-5xl mb-2">💻</div>
+                        <h4 class="font-semibold" id="minerStep1Title">1. Miners Compete</h4>
+                        <p class="text-sm text-gray-500" id="minerStep1Text">Solve a complex math puzzle using powerful computers.</p>
                     </div>
-                    <div class="bg-[#7a5195] p-6 rounded-lg text-center shadow-2xl">
-                        <p class="text-xl font-bold text-white mb-2">LOWEST VOLATILITY</p>
-                        <p class="text-4xl font-black text-[#DAF7A6]">Q2 2024 / Q2 2025</p>
-                        <p class="text-gray-300 mt-2">Characterized by market deceleration and defensive consolidation phases.</p>
+                    <div class="text-4xl font-thin text-gray-300 hidden md:block">→</div>
+                    <div class="flex flex-col items-center">
+                        <div class="text-5xl mb-2">✅</div>
+                        <h4 class="font-semibold" id="minerStep2Title">2. Winner Validates</h4>
+                        <p class="text-sm text-gray-500" id="minerStep2Text">The first to solve the puzzle bundles recent transactions into a new block.</p>
+                    </div>
+                    <div class="text-4xl font-thin text-gray-300 hidden md:block">→</div>
+                    <div class="flex flex-col items-center">
+                         <div class="text-5xl mb-2">🏆</div>
+                        <h4 class="font-semibold" id="minerStep3Title">3. Miner is Rewarded</h4>
+                        <p class="text-sm text-gray-500" id="minerStep3Text">They receive newly created Bitcoin and transaction fees.</p>
                     </div>
                 </div>
-                <div class="bg-[#2c2c54] p-4 md:p-6 rounded-lg shadow-2xl">
-                    <h3 class="text-xl font-bold text-center text-white mb-4">30-Day Moving Average of Volume Volatility</h3>
-                    <div class="chart-container">
-                        <canvas id="volatilityTrendChart"></canvas>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-4 text-center">This conceptual chart visualizes the trend of volume volatility, showing a dramatic spike post-ETF approval, followed by stabilization and periods of calm.</p>
-                </div>
-            </section>
+            </div>
+        </section>
 
-             <section id="investor-behavior">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 text-center">A Tale of Two Investors</h2>
-                <p class="text-center text-gray-400 max-w-3xl mx-auto mb-10">The period highlighted a growing divergence between short-term retail sentiment and long-term institutional strategy, profoundly impacting volume dynamics.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                    <div class="bg-[#2c2c54] p-4 md:p-6 rounded-lg shadow-2xl flex flex-col items-center">
-                        <h3 class="text-xl font-bold text-white mb-4">Q1 2024: Retail Profit-Taking</h3>
-                        <div class="chart-container w-full max-w-[300px] h-auto aspect-square">
-                            <canvas id="investorChartQ1"></canvas>
+        <section class="my-20 md:my-28">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title" id="dexTitle">The Marketplace: Decentralized Exchanges (DEXs)</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto" id="dexSubtitle">DEXs allow users to trade crypto directly from their wallets without an intermediary. This offers more control but also more responsibility.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-10 items-start">
+                <div class="card">
+                    <h3 class="font-bold text-xl text-center mb-4" id="dexArchitecturesTitle">Dominant DEX Architectures</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4" id="dexArchitecturesText">Automated Market Makers (AMMs), which use liquidity pools instead of traditional order books, are the most common type of DEX.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="dexTypesChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                     <h3 class="font-bold text-xl text-center mb-4" id="dexCexTitle">DEX vs. CEX: Key Differences</h3>
+                     <p class="text-sm text-gray-500 text-center mb-6" id="dexCexSubtitle">Centralized Exchanges (CEXs) like Coinbase are user-friendly but custodial. DEXs offer self-custody but are more complex.</p>
+                     <div class="space-y-4">
+                        <div class="text-center">
+                             <h4 class="font-semibold" id="assetControlTitle">Asset Control</h4>
+                             <div class="grid grid-cols-2 gap-2 text-sm mt-1">
+                                <div class="bg-blue-50 palette-text-darkest p-2 rounded-lg" id="dexAssetControl">You hold your keys (DEX)</div>
+                                <div class="bg-gray-100 p-2 rounded-lg" id="cexAssetControl">Exchange holds keys (CEX)</div>
+                             </div>
                         </div>
-                        <p class="text-sm text-gray-400 mt-4 text-center max-w-xs">During the initial surge, retail investors were largely taking profits while institutional "whales" began to accumulate.</p>
-                    </div>
-                    <div class="bg-[#2c2c54] p-4 md:p-6 rounded-lg shadow-2xl flex flex-col items-center">
-                        <h3 class="text-xl font-bold text-white mb-4">Q2 2025: Institutional Conviction</h3>
-                        <div class="chart-container w-full max-w-[300px] h-auto aspect-square">
-                            <canvas id="investorChartQ2"></canvas>
+                        <div class="text-center">
+                             <h4 class="font-semibold" id="privacyTitle">Privacy</h4>
+                             <div class="grid grid-cols-2 gap-2 text-sm mt-1">
+                                <div class="bg-blue-50 palette-text-darkest p-2 rounded-lg" id="dexPrivacy">Anonymous (DEX)</div>
+                                <div class="bg-gray-100 p-2 rounded-lg" id="cexPrivacy">Requires ID (CEX)</div>
+                             </div>
                         </div>
-                        <p class="text-sm text-gray-400 mt-4 text-center max-w-xs">In the consolidation phase, retail interest waned while long-term holders showed renewed conviction, accumulating strategically.</p>
+                         <div class="text-center">
+                             <h4 class="font-semibold" id="securityModelTitle">Security Model</h4>
+                             <div class="grid grid-cols-2 gap-2 text-sm mt-1">
+                                <div class="bg-blue-50 palette-text-darkest p-2 rounded-lg" id="dexSecurityModel">User Responsibility</div>
+                                <div class="bg-gray-100 p-2 rounded-lg" id="cexSecurityModel">Corporate Responsibility</div>
+                             </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="my-20 md:my-28">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title" id="advancedToolsTitle">Advanced Tools: Privacy & Interoperability</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto" id="advancedToolsSubtitle">As the ecosystem grows, so do the tools for privacy (Mixers) and for trading assets between different blockchains (Atomic Swaps & Bridges).</p>
+            </div>
+             <div class="grid md:grid-cols-2 gap-10">
+                <div class="card">
+                     <h3 class="font-bold text-xl text-center mb-4" id="mixersTitle">Crypto Mixers (Tumblers)</h3>
+                     <p class="text-sm text-gray-500 text-center mb-6" id="mixersText">Mixers enhance privacy by breaking the on-chain link between a sender and receiver.</p>
+                     <div class="flex items-center justify-around text-center">
+                        <div>
+                             <p class="font-semibold" id="mixerInputsTitle">Inputs</p>
+                             <p class="text-4xl">👥</p>
+                             <p class="text-xs text-gray-500" id="mixerInputsText">Multiple users send funds</p>
+                        </div>
+                        <div class="text-4xl font-thin text-gray-300">→</div>
+                        <div>
+                             <p class="font-semibold" id="mixingPoolTitle">Mixing Pool</p>
+                             <p class="text-4xl">🌪️</p>
+                             <p class="text-xs text-gray-500" id="mixingPoolText">Funds are pooled & mixed</p>
+                        </div>
+                        <div class="text-4xl font-thin text-gray-300">→</div>
+                         <div>
+                             <p class="font-semibold" id="mixerOutputsTitle">Outputs</p>
+                             <p class="text-4xl">✨</p>
+                             <p class="text-xs text-gray-500" id="mixerOutputsText">"Clean" coins sent to new addresses</p>
+                        </div>
+                     </div>
+                </div>
+                 <div class="card">
+                    <h3 class="font-bold text-xl text-center mb-4" id="movingChainsTitle">Moving Between Chains</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4" id="movingChainsText">Atomic Swaps (direct peer-to-peer cryptocurrency exchanges between different blockchains without intermediaries) and Cross-Chain Bridges (which facilitate asset transfers by locking tokens on one chain and issuing equivalent "wrapped tokens" on another) both solve interoperability, but with different security trade-offs.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="swapsVsBridgesChart"></canvas>
                     </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
 
-        <footer class="text-center mt-12 md:mt-24 pt-8 border-t border-gray-700">
-            <p class="text-gray-500">This infographic is a visual summary based on the "Bitcoin Trading Volume Volatility Analysis: January 2024 - June 2025" report. Data points are illustrative based on qualitative and quantitative findings in the source material.
-            </p>
-        </footer>
-
+        <section class="my-20 md:my-28">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title" id="multisigTitle">Fort Knox Security: Multisig Wallets</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto" id="multisigSubtitle">For serious security, Multisignature (Multisig) wallets eliminate single points of failure by requiring multiple keys to approve a transaction.</p>
+            </div>
+            <div class="card">
+                <h3 class="font-bold text-xl text-center mb-4" id="multisigBenefitTitle">Single-Key vs. Multisig Security</h3>
+                <p class="text-sm text-gray-500 text-center mb-4" id="multisigBenefitText">A multisig setup dramatically improves resilience against theft and key loss compared to a standard wallet by eliminating single points of failure. Even if one key is compromised, others are still needed. If a key is lost, funds can often still be recovered with the remaining required keys.</p>
+                <div class="chart-container">
+                    <canvas id="multisigBenefitChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
     </div>
 
     <script>
-        const tooltipConfig = {
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        title: function(tooltipItems) {
-                            const item = tooltipItems[0];
-                            let label = item.chart.data.labels[item.dataIndex];
-                            if (Array.isArray(label)) {
-                                return label.join(' ');
+        (function() {
+            const chartColors = {
+                darkest: '#003587',
+                dark: '#0053A1',
+                medium: '#0072BB',
+                light: '#008DD5',
+                lightest: '#00A1E4',
+                gray: '#e5e7eb'
+            };
+
+            let currentLang = 'en'; // Default language
+
+            const translations = {
+                'en': {
+                    pageTitle: 'The World of Decentralized Finance: An Infographic',
+                    mainTitle: 'A Visual Guide to the Decentralized World',
+                    mainSubtitle: 'From Bitcoin\'s birth to the complex systems of modern DeFi, this infographic breaks down the core technologies building a new digital economy.',
+                    bitcoinSupplyText1: 'Bitcoin introduced the concept of digital scarcity. There will only ever be:',
+                    bitcoinSupplyText2: 'Total Bitcoins in existence, a core principle that makes it resistant to inflation.',
+                    bitcoinSupplyEnforcement: 'This limit is hardcoded into Bitcoin\'s protocol and enforced by the network through a process called "halving," which periodically reduces the reward for mining new Bitcoins. Any change would require widespread consensus, making alterations extremely difficult.',
+                    foundationTitle: 'The Foundation: Bitcoin & Blockchain',
+                    foundationSubtitle: 'Bitcoin was the first application, but Blockchain is the revolutionary technology that makes it all possible. Here\'s how they work together.',
+                    decentralizationTitle: 'Decentralization',
+                    decentralizationText: 'No single company or government controls it. The network is run by thousands of computers worldwide.',
+                    immutabilityTitle: 'Immutability',
+                    immutabilityText: 'Once a transaction is recorded, it cannot be changed or deleted, creating a permanent and trustworthy record.',
+                    cryptoSecurityTitle: 'Cryptographic Security',
+                    cryptoSecurityText: 'Advanced cryptography secures every transaction, ensuring only the owner of the funds can spend them.',
+                    blockchainFormsTitle: 'How a Blockchain Forms',
+                    blockchainStep1: '1. A transaction is requested.',
+                    blockchainStep2: '2. It\'s broadcast to a network of computers (nodes).',
+                    blockchainStep3: '3. The network validates the transaction using consensus rules.',
+                    blockchainStep4: '4. The verified transaction is combined with others into a "block".',
+                    blockchainStep5: '5. The new block is cryptographically linked to the previous one, forming a secure chain.',
+                    miningTitle: 'The Engine Room: Bitcoin Mining',
+                    miningSubtitle: 'Mining is the process that secures the network and creates new coins. It\'s a competitive race powered by a mechanism called Proof-of-Work (PoW).',
+                    minerStep1Title: '1. Miners Compete',
+                    minerStep1Text: 'Solve a complex math puzzle using powerful computers.',
+                    minerStep2Title: '2. Winner Validates',
+                    minerStep2Text: 'The first to solve the puzzle bundles recent transactions into a new block.',
+                    minerStep3Title: '3. Miner is Rewarded',
+                    minerStep3Text: 'They receive newly created Bitcoin and transaction fees.',
+                    dexTitle: 'The Marketplace: Decentralized Exchanges (DEXs)',
+                    dexSubtitle: 'DEXs allow users to trade crypto directly from their wallets without an intermediary. This offers more control but also more responsibility.',
+                    dexArchitecturesTitle: 'Dominant DEX Architectures',
+                    dexArchitecturesText: 'Automated Market Makers (AMMs), which use liquidity pools instead of traditional order books, are the most common type of DEX.',
+                    dexCexTitle: 'DEX vs. CEX: Key Differences',
+                    dexCexSubtitle: 'Centralized Exchanges (CEXs) like Coinbase are user-friendly but custodial. DEXs offer self-custody but are more complex.',
+                    assetControlTitle: 'Asset Control',
+                    dexAssetControl: 'You hold your keys (DEX)',
+                    cexAssetControl: 'Exchange holds keys (CEX)',
+                    privacyTitle: 'Privacy',
+                    dexPrivacy: 'Anonymous (DEX)',
+                    cexPrivacy: 'Requires ID (CEX)',
+                    securityModelTitle: 'Security Model',
+                    dexSecurityModel: 'User Responsibility',
+                    cexSecurityModel: 'Corporate Responsibility',
+                    advancedToolsTitle: 'Advanced Tools: Privacy & Interoperability',
+                    advancedToolsSubtitle: 'As the ecosystem grows, so do the tools for privacy (Mixers) and for trading assets between different blockchains (Atomic Swaps & Bridges).',
+                    mixersTitle: 'Crypto Mixers (Tumblers)',
+                    mixersText: 'Mixers enhance privacy by breaking the on-chain link between a sender and receiver.',
+                    mixerInputsTitle: 'Inputs',
+                    mixerInputsText: 'Multiple users send funds',
+                    mixingPoolTitle: 'Mixing Pool',
+                    mixingPoolText: 'Funds are pooled & mixed',
+                    mixerOutputsTitle: 'Outputs',
+                    mixerOutputsText: '"Clean" coins sent to new addresses',
+                    movingChainsTitle: 'Moving Between Chains',
+                    movingChainsText: 'Atomic Swaps (direct peer-to-peer cryptocurrency exchanges between different blockchains without intermediaries) and Cross-Chain Bridges (which facilitate asset transfers by locking tokens on one chain and issuing equivalent "wrapped tokens" on another) both solve interoperability, but with different security trade-offs.',
+                    multisigTitle: 'Fort Knox Security: Multisig Wallets',
+                    multisigSubtitle: 'For serious security, Multisignature (Multisig) wallets eliminate single points of failure by requiring multiple keys to approve a transaction.',
+                    multisigBenefitTitle: 'Single-Key vs. Multisig Security',
+                    multisigBenefitText: 'A multisig setup dramatically improves resilience against theft and key loss compared to a standard wallet by eliminating single points of failure. Even if one key is compromised, others are still needed. If a key is lost, funds can often still be recovered with the remaining required keys.',
+                    // Chart labels and titles
+                    dexTypesChartLabels: ['AMM DEXs', 'Order Book DEXs', 'Aggregators'],
+                    dexTypesChartLabel: 'DEX Market Share',
+                    swapsVsBridgesChartLabels: ['Security (Decentralization)', 'Compatibility (Flexibility)'],
+                    swapsVsBridgesChartLabel1: 'Atomic Swaps',
+                    swapsVsBridgesChartLabel2: 'Cross-Chain Bridges',
+                    swapsVsBridgesChartTitle: 'Interoperability Method Ratings (out of 10)',
+                    multisigBenefitChartLabels: ['Resistance to Theft', 'Resilience to Key Loss', 'Internal Control'],
+                    multisigBenefitChartLabel1: 'Single-Key Wallet',
+                    multisigBenefitChartLabel2: 'Multisig Wallet',
+                    multisigBenefitChartTitle: 'Wallet Security Ratings (out of 10)'
+                },
+                'it': {
+                    pageTitle: 'Il Mondo della Finanza Decentralizzata: Un\'Infografica',
+                    mainTitle: 'Una Guida Visuale al Mondo Decentralizzato',
+                    mainSubtitle: 'Dalla nascita di Bitcoin ai complessi sistemi della moderna DeFi, questa infografica illustra le tecnologie fondamentali che stanno costruendo una nuova economia digitale.',
+                    bitcoinSupplyText1: 'Bitcoin ha introdotto il concetto di scarsità digitale. Ci saranno solo:',
+                    bitcoinSupplyText2: 'Bitcoin totali in esistenza, un principio fondamentale che lo rende resistente all\'inflazione.',
+                    bitcoinSupplyEnforcement: 'Questo limite è cablato nel protocollo di Bitcoin e applicato dalla rete attraverso un processo chiamato "halving", che riduce periodicamente la ricompensa per il mining di nuovi Bitcoin. Qualsiasi modifica richiederebbe un ampio consenso, rendendo le alterazioni estremamente difficili.',
+                    foundationTitle: 'Le Fondamenta: Bitcoin e Blockchain',
+                    foundationSubtitle: 'Bitcoin è stata la prima applicazione, ma la Blockchain è la tecnologia rivoluzionaria che rende tutto ciò possibile. Ecco come funzionano insieme.',
+                    decentralizationTitle: 'Decentralizzazione',
+                    decentralizationText: 'Nessuna singola azienda o governo lo controlla. La rete è gestita da migliaia di computer in tutto il mondo.',
+                    immutabilityTitle: 'Immutabilità',
+                    immutabilityText: 'Una volta che una transazione è registrata, non può essere modificata o eliminata, creando un registro permanente e affidabile.',
+                    cryptoSecurityTitle: 'Sicurezza Criptografica',
+                    cryptoSecurityText: 'La crittografia avanzata protegge ogni transazione, garantendo che solo il proprietario dei fondi possa spenderli.',
+                    blockchainFormsTitle: 'Come si Forma una Blockchain',
+                    blockchainStep1: '1. Viene richiesta una transazione.',
+                    blockchainStep2: '2. Viene trasmessa a una rete di computer (nodi).',
+                    blockchainStep3: '3. La rete convalida la transazione utilizzando le regole di consenso.',
+                    blockchainStep4: '4. La transazione verificata viene combinata con altre in un "blocco".',
+                    blockchainStep5: '5. Il nuovo blocco è collegato crittograficamente al precedente, formando una catena sicura.',
+                    miningTitle: 'La Sala Macchine: Mining di Bitcoin',
+                    miningSubtitle: 'Il mining è il processo che mette in sicurezza la rete e crea nuove monete. È una gara competitiva alimentata da un meccanismo chiamato Proof-of-Work (PoW).',
+                    minerStep1Title: '1. I Miner Competono',
+                    minerStep1Text: 'Risolvono un complesso enigma matematico usando computer potenti.',
+                    minerStep2Title: '2. Il Vincitore Convalida',
+                    minerStep2Text: 'Il primo a risolvere l\'enigma raggruppa le transazioni recenti in un nuovo blocco.',
+                    minerStep3Title: '3. Il Miner Viene Ricompensato',
+                    minerStep3Text: 'Riceve Bitcoin di nuova creazione e commissioni di transazione.',
+                    dexTitle: 'Il Mercato: Scambi Decentralizzati (DEX)',
+                    dexSubtitle: 'I DEX consentono agli utenti di scambiare criptovalute direttamente dai loro portafogli senza un intermediario. Ciò offre maggiore controllo ma anche maggiore responsabilità.',
+                    dexArchitecturesTitle: 'Architetture DEX Dominanti',
+                    dexArchitecturesText: 'Gli Automated Market Maker (AMM), che utilizzano pool di liquidità invece dei tradizionali order book, sono il tipo più comune di DEX.',
+                    dexCexTitle: 'DEX vs. CEX: Differenze Chiave',
+                    dexCexSubtitle: 'Gli scambi centralizzati (CEX) come Coinbase sono user-friendly ma custodiali. I DEX offrono l\'auto-custodia ma sono più complessi.',
+                    assetControlTitle: 'Controllo degli Asset',
+                    dexAssetControl: 'Mantieni le tue chiavi (DEX)',
+                    cexAssetControl: 'L\'exchange detiene le chiavi (CEX)',
+                    privacyTitle: 'Privacy',
+                    dexPrivacy: 'Anonimo (DEX)',
+                    cexPrivacy: 'Richiede ID (CEX)',
+                    securityModelTitle: 'Modello di Sicurezza',
+                    dexSecurityModel: 'Responsabilità dell\'utente',
+                    cexSecurityModel: 'Responsabilità aziendale',
+                    advancedToolsTitle: 'Strumenti Avanzati: Privacy e Interoperabilità',
+                    advancedToolsSubtitle: 'Con la crescita dell\'ecosistema, crescono anche gli strumenti per la privacy (Mixer) e per lo scambio di asset tra diverse blockchain (Atomic Swaps e Bridges).',
+                    mixersTitle: 'Mixer di Criptovalute (Tumblers)',
+                    mixersText: 'I mixer migliorano la privacy rompendo il collegamento on-chain tra un mittente e un destinatario.',
+                    mixerInputsTitle: 'Input',
+                    mixerInputsText: 'Più utenti inviano fondi',
+                    mixingPoolTitle: 'Pool di Miscelazione',
+                    mixingPoolText: 'I fondi vengono raggruppati e miscelati',
+                    mixerOutputsTitle: 'Output',
+                    mixerOutputsText: 'Monete "pulite" inviate a nuovi indirizzi',
+                    movingChainsTitle: 'Spostamento Tra Catene',
+                    movingChainsText: 'Gli Atomic Swaps, che consentono scambi diretti di criptovalute peer-to-peer tra diverse blockchain senza intermediari, e i Ponti Cross-Chain, che facilitano i trasferimenti di asset bloccando i token su una catena ed emettendo "token wrapped" equivalenti su un\'altra, risolvono entrambi l\'interoperabilità, ma con diversi compromessi di sicurezza.',
+                    multisigTitle: 'Sicurezza Fort Knox: Portafogli Multisig',
+                    multisigSubtitle: 'Per una sicurezza elevata, i portafogli Multisignature (Multisig) eliminano i singoli punti di fallimento richiedendo più chiavi per approvare una transazione.',
+                    multisigBenefitTitle: 'Sicurezza Chiave Singola vs. Multisig',
+                    multisigBenefitText: 'Una configurazione multisig migliora drasticamente la resilienza contro furti e perdite di chiavi rispetto a un portafoglio standard eliminando i singoli punti di fallimento. Anche se una chiave viene compromessa, ne sono comunque necessarie altre. Se una chiave viene persa, i fondi possono spesso essere recuperati con le chiavi rimanenti richieste.',
+                    // Chart labels and titles
+                    dexTypesChartLabels: ['DEX AMM', 'DEX Order Book', 'Aggregatori'],
+                    dexTypesChartLabel: 'Quota di Mercato DEX',
+                    swapsVsBridgesChartLabels: ['Sicurezza (Decentralizzazione)', 'Compatibilità (Flessibilità)'],
+                    swapsVsBridgesChartLabel1: 'Atomic Swaps',
+                    swapsVsBridgesChartLabel2: 'Ponti Cross-Chain',
+                    swapsVsBridgesChartTitle: 'Valutazioni Metodi di Interoperabilità (su 10)',
+                    multisigBenefitChartLabels: ['Resistenza al Furto', 'Resilienza alla Perdita Chiavi', 'Controllo Interno'],
+                    multisigBenefitChartLabel1: 'Portafoglio a Chiave Singola',
+                    multisigBenefitChartLabel2: 'Portafoglio Multisig',
+                    multisigBenefitChartTitle: 'Valutazioni Sicurezza Portafoglio (su 10)'
+                }
+            };
+
+            function wrapLabels(label) {
+                const max_width = 16;
+                const words = label.split(' ');
+                let lines = [];
+                let current_line = '';
+                for (let i = 0; i < words.length; i++) {
+                    const word = words[i];
+                    if ((current_line + word).length > max_width) {
+                        lines.push(current_line.trim());
+                        current_line = '';
+                    }
+                    current_line += word + ' ';
+                }
+                lines.push(current_line.trim());
+                return lines;
+            }
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+
+            const defaultChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                           font: { size: 12 },
+                           padding: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            };
+
+            let dexTypesChartInstance;
+            let swapsVsBridgesChartInstance;
+            let multisigBenefitChartInstance;
+
+            function updateCharts() {
+                // DEX Types Chart
+                if (dexTypesChartInstance) dexTypesChartInstance.destroy();
+                dexTypesChartInstance = new Chart(document.getElementById('dexTypesChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: translations[currentLang].dexTypesChartLabels,
+                        datasets: [{
+                            label: translations[currentLang].dexTypesChartLabel,
+                            data: [75, 15, 10],
+                            backgroundColor: [chartColors.dark, chartColors.medium, chartColors.lightest],
+                            borderColor: '#f8fafc',
+                            borderWidth: 4,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: { ...defaultChartOptions, cutout: '50%' }
+                });
+
+                // Swaps vs Bridges Chart
+                if (swapsVsBridgesChartInstance) swapsVsBridgesChartInstance.destroy();
+                swapsVsBridgesChartInstance = new Chart(document.getElementById('swapsVsBridgesChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: translations[currentLang].swapsVsBridgesChartLabels.map(wrapLabels),
+                        datasets: [{
+                            label: translations[currentLang].swapsVsBridgesChartLabel1,
+                            data: [9, 4],
+                            backgroundColor: chartColors.dark,
+                            borderColor: chartColors.dark,
+                            borderWidth: 1
+                        }, {
+                            label: translations[currentLang].swapsVsBridgesChartLabel2,
+                            data: [5, 9],
+                            backgroundColor: chartColors.lightest,
+                            borderColor: chartColors.lightest,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { ...defaultChartOptions,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 10,
+                                ticks: {
+                                    stepSize: 1
+                                },
+                                 grid: {
+                                    color: '#e5e7eb'
+                                }
+                            },
+                            x: {
+                                 grid: {
+                                    display: false
+                                }
                             }
-                            return label;
+                        },
+                        plugins: {
+                            ...defaultChartOptions.plugins,
+                            title: {
+                                display: true,
+                                text: translations[currentLang].swapsVsBridgesChartTitle,
+                                font: { size: 14, weight: 'bold' },
+                                padding: { bottom: 10 }
+                            }
                         }
                     }
-                }
-            }
-        };
+                });
 
-        const wrapLabel = (label) => {
-            const maxLength = 16;
-            if (label.length <= maxLength) return label;
-            const words = label.split(' ');
-            let lines = [];
-            let currentLine = '';
-            words.forEach(word => {
-                if ((currentLine + ' ' + word).trim().length > maxLength) {
-                    lines.push(currentLine.trim());
-                    currentLine = word;
-                } else {
-                    currentLine = (currentLine + ' ' + word).trim();
+                // Multisig Benefit Chart
+                if (multisigBenefitChartInstance) multisigBenefitChartInstance.destroy();
+                multisigBenefitChartInstance = new Chart(document.getElementById('multisigBenefitChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: translations[currentLang].multisigBenefitChartLabels.map(wrapLabels),
+                        datasets: [{
+                            label: translations[currentLang].multisigBenefitChartLabel1,
+                            data: [4, 1, 2],
+                            backgroundColor: chartColors.lightest,
+                        }, {
+                            label: translations[currentLang].multisigBenefitChartLabel2,
+                            data: [9, 8, 9],
+                            backgroundColor: chartColors.dark,
+                        }]
+                    },
+                    options: { ...defaultChartOptions,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 10,
+                                ticks: {
+                                    stepSize: 1
+                                },
+                                grid: {
+                                    color: '#e5e7eb'
+                                }
+                            },
+                             y: {
+                                ticks: {
+                                    callback: function(value) {
+                                        const label = this.getLabelForValue(value);
+                                        return Array.isArray(label) ? label.join(' ') : label;
+                                    }
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                         plugins: {
+                            ...defaultChartOptions.plugins,
+                            title: {
+                                display: true,
+                                text: translations[currentLang].multisigBenefitChartTitle,
+                                font: { size: 14, weight: 'bold' },
+                                padding: { bottom: 10 }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function applyTranslations() {
+                const elementsToTranslate = {
+                    pageTitle: 'pageTitle',
+                    mainTitle: 'mainTitle',
+                    mainSubtitle: 'mainSubtitle',
+                    bitcoinSupplyText1: 'bitcoinSupplyText1',
+                    bitcoinSupplyText2: 'bitcoinSupplyText2',
+                    bitcoinSupplyEnforcement: 'bitcoinSupplyEnforcement',
+                    foundationTitle: 'foundationTitle',
+                    foundationSubtitle: 'foundationSubtitle',
+                    decentralizationTitle: 'decentralizationTitle',
+                    decentralizationText: 'decentralizationText',
+                    immutabilityTitle: 'immutabilityTitle',
+                    immutabilityText: 'immutabilityText',
+                    cryptoSecurityTitle: 'cryptoSecurityTitle',
+                    cryptoSecurityText: 'cryptoSecurityText',
+                    blockchainFormsTitle: 'blockchainFormsTitle',
+                    blockchainStep1: 'blockchainStep1',
+                    blockchainStep2: 'blockchainStep2',
+                    blockchainStep3: 'blockchainStep3',
+                    blockchainStep4: 'blockchainStep4',
+                    blockchainStep5: 'blockchainStep5',
+                    miningTitle: 'miningTitle',
+                    miningSubtitle: 'miningSubtitle',
+                    minerStep1Title: 'minerStep1Title',
+                    minerStep1Text: 'minerStep1Text',
+                    minerStep2Title: 'minerStep2Title',
+                    minerStep2Text: 'minerStep2Text',
+                    minerStep3Title: 'minerStep3Title',
+                    minerStep3Text: 'minerStep3Text',
+                    dexTitle: 'dexTitle',
+                    dexSubtitle: 'dexSubtitle',
+                    dexArchitecturesTitle: 'dexArchitecturesTitle',
+                    dexArchitecturesText: 'dexArchitecturesText',
+                    dexCexTitle: 'dexCexTitle',
+                    dexCexSubtitle: 'dexCexSubtitle',
+                    assetControlTitle: 'assetControlTitle',
+                    dexAssetControl: 'dexAssetControl',
+                    cexAssetControl: 'cexAssetControl',
+                    privacyTitle: 'privacyTitle',
+                    dexPrivacy: 'dexPrivacy',
+                    cexPrivacy: 'cexPrivacy',
+                    securityModelTitle: 'securityModelTitle',
+                    dexSecurityModel: 'dexSecurityModel',
+                    cexSecurityModel: 'cexSecurityModel',
+                    advancedToolsTitle: 'advancedToolsTitle',
+                    advancedToolsSubtitle: 'advancedToolsSubtitle',
+                    mixersTitle: 'mixersTitle',
+                    mixersText: 'mixersText',
+                    mixerInputsTitle: 'mixerInputsTitle',
+                    mixerInputsText: 'mixerInputsText',
+                    mixingPoolTitle: 'mixingPoolTitle',
+                    mixingPoolText: 'mixingPoolText',
+                    mixerOutputsTitle: 'mixerOutputsTitle',
+                    mixerOutputsText: 'mixerOutputsText',
+                    movingChainsTitle: 'movingChainsTitle',
+                    movingChainsText: 'movingChainsText',
+                    multisigTitle: 'multisigTitle',
+                    multisigSubtitle: 'multisigSubtitle',
+                    multisigBenefitTitle: 'multisigBenefitTitle',
+                    multisigBenefitText: 'multisigBenefitText'
+                };
+
+                for (const id in elementsToTranslate) {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = translations[currentLang][id];
+                    }
                 }
+                
+                const languageToggleButton = document.getElementById('languageToggle');
+                languageToggleButton.textContent = currentLang === 'en' ? 'Italiano' : 'English';
+
+                updateCharts(); // Re-render charts with new labels
+            }
+
+            document.getElementById('languageToggle').addEventListener('click', () => {
+                currentLang = currentLang === 'en' ? 'it' : 'en';
+                applyTranslations();
             });
-            lines.push(currentLine.trim());
-            return lines;
-        };
 
-        const quarterlyVolumeData = {
-            labels: ['Q4 2023', 'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025'],
-            datasets: [{
-                label: 'Spot Trading Volume ($ Trillion)',
-                data: [2.2, 4.29, 3.40, 3.96, 4.5, 3.27, 2.5],
-                backgroundColor: '#FF5733',
-                borderColor: '#FFC300',
-                borderWidth: 2,
-                borderRadius: 5,
-            }]
-        };
-
-        new Chart(document.getElementById('quarterlyVolumeChart'), {
-            type: 'bar',
-            data: quarterlyVolumeData,
-            options: {
-                ...tooltipConfig,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Volume in Trillions (USD)', color: '#9CA3AF' },
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#D1D5DB' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#D1D5DB' }
-                    }
-                },
-                plugins: {
-                     ...tooltipConfig.plugins,
-                    legend: { display: false }
-                }
-            }
-        });
-
-        const volatilityTrendData = {
-            labels: ['Dec', 'Jan \'24', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan \'25', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: '30-Day MA of Volume Volatility',
-                data: [15, 85, 75, 40, 25, 20, 30, 28, 35, 33, 45, 60, 50, 40, 35, 30, 25, 22, 20],
-                fill: true,
-                backgroundColor: 'rgba(255, 87, 51, 0.2)',
-                borderColor: '#FF5733',
-                tension: 0.4,
-                pointRadius: 0
-            }]
-        };
-
-        new Chart(document.getElementById('volatilityTrendChart'), {
-            type: 'line',
-            data: volatilityTrendData,
-            options: {
-                 ...tooltipConfig,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                     y: {
-                        title: { display: true, text: 'Volatility Index', color: '#9CA3AF' },
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#D1D5DB' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#D1D5DB' }
-                    }
-                },
-                plugins: {
-                     ...tooltipConfig.plugins,
-                    legend: { display: false }
-                }
-            }
-        });
-
-        const investorDataQ1 = {
-            labels: ['Retail Profit-Taking', 'Institutional Accumulation'],
-            datasets: [{
-                data: [70, 30],
-                backgroundColor: ['#C70039', '#581845'],
-                borderColor: '#2c2c54',
-                borderWidth: 4,
-            }]
-        };
-
-        new Chart(document.getElementById('investorChartQ1'), {
-            type: 'doughnut',
-            data: investorDataQ1,
-            options: {
-                ...tooltipConfig,
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                     ...tooltipConfig.plugins,
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                           color: '#D1D5DB'
-                        }
-                    }
-                }
-            }
-        });
-        
-        const investorDataQ2 = {
-            labels: ['Cautious Retail Interest', 'Strategic Long-Term Holding'],
-            datasets: [{
-                data: [25, 75],
-                backgroundColor: ['#900C3F', '#DAF7A6'],
-                borderColor: '#2c2c54',
-                borderWidth: 4,
-            }]
-        };
-
-        new Chart(document.getElementById('investorChartQ2'), {
-            type: 'doughnut',
-            data: investorDataQ2,
-            options: {
-                ...tooltipConfig,
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                     ...tooltipConfig.plugins,
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                           color: '#D1D5DB'
-                        }
-                    }
-                }
-            }
-        });
-
+            // Initial load
+            applyTranslations();
+        })();
     </script>
+
 </body>
 </html>
