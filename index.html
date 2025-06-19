@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Brilliant Blues -->
     <!-- Application Structure Plan: The infographic is structured as a single, scrollable narrative that guides the user from foundational concepts to advanced topics. It begins with a hook (Bitcoin's fixed supply), then covers Bitcoin and Blockchain fundamentals side-by-side. It flows into the operational aspects (Mining), the marketplace (DEXs), advanced tools (Swaps & Mixers), and finally, security (Multisig). This linear, top-to-bottom progression is ideal for an infographic format, as it builds knowledge layer by layer, making complex information digestible for a broad audience. -->
-    <!-- Visualization & Content Choices: 
+    <!-- Visualization & Content Choices:
         - Bitcoin's Supply -> Goal: Inform -> Viz/Method: Single Big Number -> Justification: A powerful, immediate hook to convey scarcity -> Library/Method: HTML/CSS.
         - Blockchain Process -> Goal: Organize -> Viz/Method: HTML/CSS Flow Chart -> Justification: Visually simplifies the complex, sequential process of block creation and linking -> Library/Method: HTML/CSS.
         - DEX Architectures -> Goal: Compare -> Viz/Method: Donut Chart -> Justification: Effectively shows the composition/prevalence of different DEX types, highlighting AMMs' dominance -> Library/Method: Chart.js/Canvas.
@@ -209,7 +209,7 @@
                 </div>
                  <div class="card">
                     <h3 class="font-bold text-xl text-center mb-4" id="movingChainsTitle">Moving Between Chains</h3>
-                    <p class="text-sm text-gray-500 text-center mb-4" id="movingChainsText">Atomic Swaps and Cross-Chain Bridges both solve interoperability, but with different security trade-offs.</p>
+                    <p class="text-sm text-gray-500 text-center mb-4" id="movingChainsText">Atomic Swaps, which allow direct peer-to-peer cryptocurrency exchanges between different blockchains without intermediaries, and Cross-Chain Bridges, which facilitate asset transfers by locking tokens on one chain and issuing equivalent "wrapped tokens" on another, both solve interoperability, but with different security trade-offs.</p>
                     <div class="chart-container h-80 md:h-96">
                         <canvas id="swapsVsBridgesChart"></canvas>
                     </div>
@@ -224,7 +224,7 @@
             </div>
             <div class="card">
                 <h3 class="font-bold text-xl text-center mb-4" id="multisigBenefitTitle">Single-Key vs. Multisig Security</h3>
-                <p class="text-sm text-gray-500 text-center mb-4" id="multisigBenefitText">A multisig setup dramatically improves resilience against theft and key loss compared to a standard wallet.</p>
+                <p class="text-sm text-gray-500 text-center mb-4" id="multisigBenefitText">A multisig setup dramatically improves resilience against theft and key loss compared to a standard wallet by eliminating single points of failure. Even if one key is compromised, others are still needed. If a key is lost, funds can often still be recovered with the remaining required keys.</p>
                 <div class="chart-container">
                     <canvas id="multisigBenefitChart"></canvas>
                 </div>
@@ -301,11 +301,11 @@
                     mixerOutputsTitle: 'Outputs',
                     mixerOutputsText: '"Clean" coins sent to new addresses',
                     movingChainsTitle: 'Moving Between Chains',
-                    movingChainsText: 'Atomic Swaps and Cross-Chain Bridges both solve interoperability, but with different security trade-offs.',
+                    movingChainsText: 'Atomic Swaps, which allow direct peer-to-peer cryptocurrency exchanges between different blockchains without intermediaries, and Cross-Chain Bridges, which facilitate asset transfers by locking tokens on one chain and issuing equivalent "wrapped tokens" on another, both solve interoperability, but with different security trade-offs.',
                     multisigTitle: 'Fort Knox Security: Multisig Wallets',
                     multisigSubtitle: 'For serious security, Multisignature (Multisig) wallets eliminate single points of failure by requiring multiple keys to approve a transaction.',
                     multisigBenefitTitle: 'Single-Key vs. Multisig Security',
-                    multisigBenefitText: 'A multisig setup dramatically improves resilience against theft and key loss compared to a standard wallet.',
+                    multisigBenefitText: 'A multisig setup dramatically improves resilience against theft and key loss compared to a standard wallet by eliminating single points of failure. Even if one key is compromised, others are still needed. If a key is lost, funds can often still be recovered with the remaining required keys.',
                     // Chart labels and titles
                     dexTypesChartLabels: ['AMM DEXs', 'Order Book DEXs', 'Aggregators'],
                     dexTypesChartLabel: 'DEX Market Share',
@@ -372,11 +372,11 @@
                     mixerOutputsTitle: 'Output',
                     mixerOutputsText: 'Monete "pulite" inviate a nuovi indirizzi',
                     movingChainsTitle: 'Spostamento Tra Catene',
-                    movingChainsText: 'Gli Atomic Swaps e i Cross-Chain Bridges risolvono entrambi l\'interoperabilità, ma con diversi compromessi di sicurezza.',
+                    movingChainsText: 'Gli Atomic Swaps, che consentono scambi diretti di criptovalute peer-to-peer tra diverse blockchain senza intermediari, e i Ponti Cross-Chain, che facilitano i trasferimenti di asset bloccando i token su una catena ed emettendo "token wrapped" equivalenti su un\'altra, risolvono entrambi l\'interoperabilità, ma con diversi compromessi di sicurezza.',
                     multisigTitle: 'Sicurezza Fort Knox: Portafogli Multisig',
                     multisigSubtitle: 'Per una sicurezza elevata, i portafogli Multisignature (Multisig) eliminano i singoli punti di fallimento richiedendo più chiavi per approvare una transazione.',
                     multisigBenefitTitle: 'Sicurezza Chiave Singola vs. Multisig',
-                    multisigBenefitText: 'Una configurazione multisig migliora drasticamente la resilienza contro furti e perdite di chiavi rispetto a un portafoglio standard.',
+                    multisigBenefitText: 'Una configurazione multisig migliora drasticamente la resilienza contro furti e perdite di chiavi rispetto a un portafoglio standard eliminando i singoli punti di fallimento. Anche se una chiave viene compromessa, ne sono comunque necessarie altre. Se una chiave viene persa, i fondi possono spesso essere recuperati con le chiavi rimanenti richieste.',
                     // Chart labels and titles
                     dexTypesChartLabels: ['DEX AMM', 'DEX Order Book', 'Aggregatori'],
                     dexTypesChartLabel: 'Quota di Mercato DEX',
