@@ -3,508 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Guide to Bitcoin & Blockchain</title>
+    <title>The World of Decentralized Finance: An Infographic</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: A single-page application with a fixed top navigation bar (Home, Core Concepts, How It Works, Comparisons, Security). Content sections are dynamically displayed based on navigation clicks. This modular structure breaks the complex report into thematic, manageable chunks, allowing users to explore non-linearly, which is more effective for learning than a sequential format. The 'Home' section provides an overview. 'Core Concepts' covers Bitcoin and Blockchain fundamentals. 'How It Works' details processes like Mining and DEXs. 'Comparisons' offers interactive side-by-side views of related technologies. 'Security' covers Multisig and privacy concepts. This design prioritizes user-driven exploration and comprehension over a rigid report structure. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: The infographic is structured as a single, scrollable narrative that guides the user from foundational concepts to advanced topics. It begins with a hook (Bitcoin's fixed supply), then covers Bitcoin and Blockchain fundamentals side-by-side. It flows into the operational aspects (Mining), the marketplace (DEXs), advanced tools (Swaps & Mixers), and finally, security (Multisig). This linear, top-to-bottom progression is ideal for an infographic format, as it builds knowledge layer by layer, making complex information digestible for a broad audience. -->
     <!-- Visualization & Content Choices: 
-        - Bitcoin Characteristics -> Goal: Inform -> Viz/Method: Interactive cards with hover effects -> Interaction: Hover to reveal details -> Justification: More engaging than a static list, encourages interaction -> Library/Method: HTML/CSS/JS.
-        - Blockchain Process -> Goal: Explain Process -> Viz/Method: Animated HTML/CSS diagram of linked blocks -> Interaction: Button to trigger animation -> Justification: Visually demonstrates immutability and the chain structure, simplifying a core concept -> Library/Method: HTML/CSS/JS.
-        - DEX vs. CEX -> Goal: Compare -> Viz/Method: Interactive two-column layout with filter buttons -> Interaction: Click buttons to highlight specific criteria -> Justification: Allows users to actively compare features, enhancing retention over a passive table -> Library/Method: HTML/CSS/JS.
-        - Atomic Swap -> Goal: Explain Process -> Viz/Method: Step-by-step interactive diagram -> Interaction: Next/Previous buttons to walk through the HTLC process -> Justification: Deconstructs a complex cryptographic process into easy-to-follow visual steps -> Library/Method: HTML/CSS/JS.
-        - Multisig Wallet -> Goal: Explain Concept -> Viz/Method: A simple chart showing signature requirements (e.g., 2 of 3) -> Interaction: Buttons to switch between different multisig setups -> Justification: Clearly visualizes the concept of distributed control -> Library/Method: Chart.js/Canvas.
+        - Bitcoin's Supply -> Goal: Inform -> Viz/Method: Single Big Number -> Justification: A powerful, immediate hook to convey scarcity -> Library/Method: HTML/CSS.
+        - Blockchain Process -> Goal: Organize -> Viz/Method: HTML/CSS Flow Chart -> Justification: Visually simplifies the complex, sequential process of block creation and linking -> Library/Method: HTML/CSS.
+        - DEX Architectures -> Goal: Compare -> Viz/Method: Donut Chart -> Justification: Effectively shows the composition/prevalence of different DEX types, highlighting AMMs' dominance -> Library/Method: Chart.js/Canvas.
+        - DEX vs. CEX -> Goal: Compare -> Viz/Method: Side-by-side feature comparison with icons -> Justification: More visually engaging than a table for comparing key dichotomies -> Library/Method: HTML/CSS with Unicode icons.
+        - Atomic Swaps vs. Bridges -> Goal: Compare -> Viz/Method: Grouped Bar Chart -> Justification: Directly compares the two on key metrics (Security, Compatibility), making trade-offs clear -> Library/Method: Chart.js/Canvas.
+        - Multisig Wallets -> Goal: Compare -> Viz/Method: Bar Chart -> Justification: Clearly illustrates the security advantage of multisig over single-key wallets across different risk factors -> Library/Method: Chart.js/Canvas.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8;
-            color: #333;
-        }
-        .nav-link {
-            @apply px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-300;
-        }
-        .nav-link.active {
-            @apply text-blue-700 font-semibold bg-blue-100;
-        }
-        .content-section {
-            display: none;
-        }
-        .content-section.active {
-            display: block;
-        }
-        .card {
-            @apply bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300;
-        }
-        .btn {
-            @apply px-5 py-2.5 rounded-lg text-white font-semibold transition-all duration-300 shadow-md;
-        }
-        .btn-primary {
-            @apply bg-blue-600 hover:bg-blue-700;
-        }
-        .btn-secondary {
-            @apply bg-gray-500 hover:bg-gray-600;
-        }
-        .chart-container {
-            position: relative; 
-            width: 100%; 
-            max-width: 600px; 
-            margin-left: auto; 
-            margin-right: auto; 
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) { .chart-container { height: 350px; } }
-
-        .blockchain-animation .block {
-            transition: all 0.5s ease-in-out;
-            transform: translateX(50px);
-            opacity: 0;
-        }
-        .blockchain-animation .block.visible {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        .atomic-swap-step {
-            display: none;
-        }
-        .atomic-swap-step.active {
-            display: block;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); padding: 1.5rem; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .palette-bg-darkest { background-color: #003587; }
+        .palette-bg-dark { background-color: #0053A1; }
+        .palette-bg-medium { background-color: #0072BB; }
+        .palette-bg-light { background-color: #008DD5; }
+        .palette-bg-lightest { background-color: #00A1E4; }
+        .palette-text-darkest { color: #003587; }
+        .palette-text-lightest { color: #00A1E4; }
+        .section-title { color: #003587; }
     </style>
 </head>
-<body class="antialiased">
+<body class="text-gray-800">
 
-    <header class="sticky top-0 bg-white/80 backdrop-blur-md z-50 shadow-sm">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                     <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg">B</div>
-                     <span class="text-xl font-bold text-gray-800">Decentralized World</span>
-                </div>
-                <div class="hidden md:flex items-center space-x-2">
-                    <a href="#home" class="nav-link active">Home</a>
-                    <a href="#concepts" class="nav-link">Core Concepts</a>
-                    <a href="#how-it-works" class="nav-link">How It Works</a>
-                    <a href="#comparisons" class="nav-link">Comparisons</a>
-                    <a href="#security" class="nav-link">Security & Privacy</a>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-600 hover:text-gray-800 focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    </button>
-                </div>
-            </div>
-            <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
-                 <a href="#home" class="nav-link block text-center">Home</a>
-                 <a href="#concepts" class="nav-link block text-center">Core Concepts</a>
-                 <a href="#how-it-works" class="nav-link block text-center">How It Works</a>
-                 <a href="#comparisons" class="nav-link block text-center">Comparisons</a>
-                 <a href="#security" class="nav-link block text-center">Security & Privacy</a>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-
-        <section id="home" class="content-section active text-center">
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-4 tracking-tight">Understanding the Decentralized World</h1>
-            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
-                From Bitcoin's groundbreaking invention to the complex world of decentralized finance, this interactive guide breaks down the core technologies shaping our digital future. Explore at your own pace and discover how blockchain is building a new, decentralized internet.
-            </p>
-            <button onclick="navigateTo('concepts')" class="btn btn-primary text-lg">Start Exploring Core Concepts →</button>
-        </section>
-
-        <section id="concepts" class="content-section">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Core Concepts</h2>
-                <p class="max-w-2xl mx-auto mt-4 text-gray-600">At the heart of the crypto revolution are two foundational pillars: Bitcoin, the first digital currency, and Blockchain, the technology that makes it possible. This section introduces their fundamental properties and significance.</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 items-start">
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">What is Bitcoin?</h3>
-                    <p class="mb-6 text-gray-600">Bitcoin is the world's first decentralized digital currency, created in 2008 by the pseudonymous Satoshi Nakamoto. It allows secure peer-to-peer transactions over the internet without needing a bank or government. Its key innovation was solving the "double-spending" problem for a digital asset using a public ledger called the blockchain.</p>
-                    <div class="space-y-4">
-                        <div class="card">
-                            <h4 class="font-semibold text-lg">Decentralization</h4>
-                            <p class="text-gray-500 text-sm">No single entity controls it. Transactions are verified by a distributed network of computers, making it resilient and censorship-resistant.</p>
-                        </div>
-                        <div class="card">
-                            <h4 class="font-semibold text-lg">Finite Supply</h4>
-                            <p class="text-gray-500 text-sm">Only 21 million bitcoins will ever be created. This digital scarcity is coded into the protocol, making it resistant to inflation.</p>
-                        </div>
-                        <div class="card">
-                            <h4 class="font-semibold text-lg">Immutability</h4>
-                            <p class="text-gray-500 text-sm">Once a transaction is confirmed on the blockchain, it cannot be altered or removed, creating a permanent, tamper-proof record.</p>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">What is a Blockchain?</h3>
-                    <p class="mb-6 text-gray-600">A blockchain is a distributed, immutable digital ledger. It's a growing chain of blocks, where each block contains a list of transactions, a timestamp, and a cryptographic link (a "hash") to the previous block. This structure makes the data secure and transparent.</p>
-                    <div class="bg-white p-6 rounded-xl shadow-md">
-                        <h4 class="font-semibold text-lg mb-4 text-center">How a Blockchain Works</h4>
-                         <div class="blockchain-animation space-y-2">
-                             <div id="block1" class="block bg-gray-100 p-3 rounded-lg flex items-center justify-between"><span>Block 1</span> <span class="text-xs text-gray-500">Hash: 0000...a3b</span></div>
-                             <div class="text-center text-2xl text-blue-500">↓</div>
-                             <div id="block2" class="block bg-gray-100 p-3 rounded-lg flex items-center justify-between"><span>Block 2</span> <span class="text-xs text-gray-500">Prev Hash: ...a3b</span></div>
-                             <div class="text-center text-2xl text-blue-500">↓</div>
-                             <div id="block3" class="block bg-gray-100 p-3 rounded-lg flex items-center justify-between"><span>Block 3</span> <span class="text-xs text-gray-500">Prev Hash: ...f4c</span></div>
-                         </div>
-                        <button id="play-animation-btn" class="mt-4 w-full bg-blue-100 text-blue-700 font-semibold py-2 rounded-lg hover:bg-blue-200 transition">Play Animation</button>
-                        <p class="text-xs text-center mt-2 text-gray-500">Each new block cryptographically secures the one before it, creating an unbreakable chain. Altering a block would change its hash, breaking the entire chain.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="container mx-auto p-4 md:p-8">
         
-        <section id="how-it-works" class="content-section">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">How It Works</h2>
-                <p class="max-w-2xl mx-auto mt-4 text-gray-600">Beyond the basics, the decentralized ecosystem is powered by specific processes and platforms. This section explores the mechanics of mining, trading on decentralized exchanges (DEXs), and swapping assets across different blockchains.</p>
+        <header class="text-center my-8 md:my-16">
+            <h1 class="text-4xl md:text-6xl font-extrabold section-title tracking-tight">A Visual Guide to the Decentralized World</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">From Bitcoin's birth to the complex systems of modern DeFi, this infographic breaks down the core technologies building a new digital economy.</p>
+        </header>
+
+        <section class="my-16">
+            <div class="text-center">
+                <p class="text-xl text-gray-600">Bitcoin introduced the concept of digital scarcity. There will only ever be:</p>
+                <div class="text-7xl md:text-9xl font-extrabold palette-text-lightest my-4">21 Million</div>
+                <p class="text-xl text-gray-600">Total Bitcoins in existence, a core principle that makes it resistant to inflation.</p>
             </div>
-            <div class="space-y-16">
-                 <div>
-                    <h3 class="text-2xl font-bold mb-4">Bitcoin Mining: Securing the Network</h3>
-                    <p class="mb-6 text-gray-600">Mining is the process that both secures the Bitcoin network and creates new coins. "Miners" use powerful computers to solve a complex mathematical puzzle. The first one to solve it gets to add the next block of transactions to the blockchain and is rewarded with new Bitcoin. This process is called Proof-of-Work (PoW).</p>
-                    <div class="card grid md:grid-cols-3 gap-6 text-center">
+        </section>
+
+        <section class="my-20 md:my-28">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title">The Foundation: Bitcoin & Blockchain</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto">Bitcoin was the first application, but Blockchain is the revolutionary technology that makes it all possible. Here's how they work together.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="space-y-6">
+                    <div class="card flex items-start gap-4">
+                        <div class="text-3xl">🌐</div>
                         <div>
-                            <div class="text-4xl mb-2">💻</div>
-                            <h4 class="font-semibold">Compete to Solve</h4>
-                            <p class="text-sm text-gray-500">Miners worldwide use computational power to find a solution to the network's current puzzle.</p>
+                            <h3 class="font-bold text-lg">Decentralization</h3>
+                            <p class="text-gray-600">No single company or government controls it. The network is run by thousands of computers worldwide.</p>
                         </div>
+                    </div>
+                    <div class="card flex items-start gap-4">
+                        <div class="text-3xl">⛓️</div>
                         <div>
-                            <div class="text-4xl mb-2">✅</div>
-                            <h4 class="font-semibold">Validate Transactions</h4>
-                            <p class="text-sm text-gray-500">The winning miner groups valid transactions into a new block.</p>
+                            <h3 class="font-bold text-lg">Immutability</h3>
+                            <p class="text-gray-600">Once a transaction is recorded, it cannot be changed or deleted, creating a permanent and trustworthy record.</p>
                         </div>
+                    </div>
+                    <div class="card flex items-start gap-4">
+                        <div class="text-3xl">🔑</div>
                         <div>
-                           <div class="text-4xl mb-2">🏆</div>
-                           <h4 class="font-semibold">Earn Reward</h4>
-                           <p class="text-sm text-gray-500">The miner receives newly minted Bitcoin and transaction fees as a reward for their work.</p>
+                            <h3 class="font-bold text-lg">Cryptographic Security</h3>
+                            <p class="text-gray-600">Advanced cryptography secures every transaction, ensuring only the owner of the funds can spend them.</p>
                         </div>
                     </div>
                 </div>
-
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">Decentralized Exchanges (DEXs)</h3>
-                    <p class="mb-6 text-gray-600">DEXs are peer-to-peer marketplaces where users can trade cryptocurrencies directly from their own wallets without needing a trusted intermediary. They rely on smart contracts to execute trades.</p>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="card">
-                            <h4 class="font-semibold text-lg mb-2">Automated Market Makers (AMMs)</h4>
-                            <p class="text-sm text-gray-600 mb-4">The most common type, like Uniswap. Instead of matching buyers and sellers, traders trade against a "liquidity pool" of tokens supplied by other users. Prices are set by a mathematical formula.</p>
-                            <div class="text-center font-mono p-4 bg-gray-100 rounded-lg">Assets_A * Assets_B = Constant</div>
+                <div class="card palette-bg-darkest text-white">
+                    <h3 class="text-xl font-bold text-center mb-6">How a Blockchain Forms</h3>
+                    <div class="flex flex-col items-center space-y-2">
+                        <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p>1. A transaction is requested.</p>
                         </div>
-                        <div class="card">
-                            <h4 class="font-semibold text-lg mb-2">Order Book DEXs</h4>
-                            <p class="text-sm text-gray-600 mb-4">Function like traditional stock exchanges. They have an "order book" that lists all open buy and sell orders. A matching engine pairs up compatible orders to execute trades.</p>
-                            <div class="text-center p-4 bg-gray-100 rounded-lg flex justify-around">
-                               <div class="text-red-600">Sells: $2005<br>$2002<br>$2000</div>
-                               <div class="text-green-600">Buys: $1999<br>$1998<br>$1995</div>
-                            </div>
+                        <div class="font-mono text-2xl">↓</div>
+                         <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p>2. It's broadcast to a network of computers (nodes).</p>
                         </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">Atomic Swaps: Trustless Cross-Chain Trading</h3>
-                    <p class="mb-6 text-gray-600">An atomic swap is a smart-contract method that allows two people to trade cryptocurrencies directly between different blockchains without a centralized third party. The "atomic" part means the trade either completes fully for both parties or fails entirely, so no one can be cheated.</p>
-                    <div class="card">
-                        <h4 class="font-semibold text-lg mb-4 text-center">The Hashed Timelock Contract (HTLC) Process</h4>
-                        <div class="atomic-swap-container relative">
-                            <div id="swap-step-1" class="atomic-swap-step active text-center p-4">
-                                <p><strong>Step 1: Agreement</strong><br>Alice (with BTC) and Bob (with ETH) agree to swap. Alice creates a secret key and its hash.</p>
-                            </div>
-                            <div id="swap-step-2" class="atomic-swap-step text-center p-4">
-                                <p><strong>Step 2: Alice's Deposit</strong><br>Alice locks her BTC in a contract that requires her secret key to unlock. She sends the hash to Bob.</p>
-                            </div>
-                            <div id="swap-step-3" class="atomic-swap-step text-center p-4">
-                                <p><strong>Step 3: Bob's Deposit</strong><br>Bob uses Alice's hash to lock his ETH in a similar contract. Alice can use her secret key to claim it.</p>
-                            </div>
-                            <div id="swap-step-4" class="atomic-swap-step text-center p-4">
-                                <p><strong>Step 4: Alice Claims & Reveals</strong><br>Alice claims Bob's ETH, revealing her secret key in the process.</p>
-                            </div>
-                             <div id="swap-step-5" class="atomic-swap-step text-center p-4">
-                                <p><strong>Step 5: Bob Claims</strong><br>Bob now has Alice's secret key and uses it to claim her BTC. The swap is complete!</p>
-                            </div>
+                        <div class="font-mono text-2xl">↓</div>
+                         <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p>3. The network validates the transaction using consensus rules.</p>
                         </div>
-                        <div class="flex justify-center mt-4 space-x-4">
-                            <button id="prev-swap-step" class="btn btn-secondary">Previous</button>
-                            <button id="next-swap-step" class="btn btn-primary">Next</button>
+                        <div class="font-mono text-2xl">↓</div>
+                         <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p>4. The verified transaction is combined with others into a "block".</p>
+                        </div>
+                        <div class="font-mono text-2xl">↓</div>
+                         <div class="p-3 bg-white/20 rounded-lg w-full text-center">
+                            <p>5. The new block is cryptographically linked to the previous one, forming a secure chain.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <section id="comparisons" class="content-section">
+
+        <section class="my-20 md:my-28">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Interactive Comparisons</h2>
-                <p class="max-w-2xl mx-auto mt-4 text-gray-600">The world of crypto is full of trade-offs. This section provides interactive comparisons to help you understand the key differences between various platforms and technologies. Click the buttons to highlight specific criteria.</p>
+                <h2 class="text-3xl md:text-4xl font-bold section-title">The Engine Room: Bitcoin Mining</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto">Mining is the process that secures the network and creates new coins. It's a competitive race powered by a mechanism called Proof-of-Work (PoW).</p>
             </div>
-            
-            <div class="card">
-                <h3 class="text-2xl font-bold mb-2 text-center">DEX vs. CEX</h3>
-                <p class="text-center text-gray-600 mb-6">Compare Decentralized Exchanges (DEX) with Centralized Exchanges (CEX) like Coinbase or Binance.</p>
-                <div id="comparison-buttons" class="flex flex-wrap justify-center gap-2 mb-6">
-                    <button class="comp-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Asset Control</button>
-                    <button class="comp-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Security</button>
-                    <button class="comp-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Privacy</button>
-                    <button class="comp-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">User Experience</button>
-                </div>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div id="dex-col" class="bg-blue-50 p-4 rounded-lg border-2 border-transparent transition-all duration-300">
-                        <h4 class="font-bold text-xl mb-2 text-blue-800">Decentralized Exchange (DEX)</h4>
-                        <ul class="space-y-3">
-                            <li data-comp="Asset Control"><strong>Asset Control:</strong> You keep full control of your funds and private keys (non-custodial).</li>
-                            <li data-comp="Security"><strong>Security:</strong> No central point of failure for hacks. Risk lies in smart contract bugs.</li>
-                            <li data-comp="Privacy"><strong>Privacy:</strong> Generally no KYC (Know Your Customer) needed. More anonymous.</li>
-                            <li data-comp="User Experience"><strong>User Experience:</strong> Can be complex for beginners. Requires self-managed wallet.</li>
-                        </ul>
+            <div class="card md:col-span-2">
+                <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4 text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="text-5xl mb-2">💻</div>
+                        <h4 class="font-semibold">1. Miners Compete</h4>
+                        <p class="text-sm text-gray-500">Solve a complex math puzzle using powerful computers.</p>
                     </div>
-                     <div id="cex-col" class="bg-green-50 p-4 rounded-lg border-2 border-transparent transition-all duration-300">
-                        <h4 class="font-bold text-xl mb-2 text-green-800">Centralized Exchange (CEX)</h4>
-                        <ul class="space-y-3">
-                            <li data-comp="Asset Control"><strong>Asset Control:</strong> The exchange holds your funds in custody. You don't control the private keys.</li>
-                            <li data-comp="Security"><strong>Security:</strong> A large, centralized target for hackers. But they often have insurance and security teams.</li>
-                            <li data-comp="Privacy"><strong>Privacy:</strong> Requires mandatory identity verification (KYC). Less private.</li>
-                            <li data-comp="User Experience"><strong>User Experience:</strong> Generally very user-friendly, with customer support and easy fiat on-ramps.</li>
-                        </ul>
+                    <div class="text-4xl font-thin text-gray-300 hidden md:block">→</div>
+                    <div class="flex flex-col items-center">
+                        <div class="text-5xl mb-2">✅</div>
+                        <h4 class="font-semibold">2. Winner Validates</h4>
+                        <p class="text-sm text-gray-500">The first to solve the puzzle bundles recent transactions into a new block.</p>
+                    </div>
+                    <div class="text-4xl font-thin text-gray-300 hidden md:block">→</div>
+                    <div class="flex flex-col items-center">
+                         <div class="text-5xl mb-2">🏆</div>
+                        <h4 class="font-semibold">3. Miner is Rewarded</h4>
+                        <p class="text-sm text-gray-500">They receive newly created Bitcoin and transaction fees.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="security" class="content-section">
+        <section class="my-20 md:my-28">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Security & Privacy</h2>
-                <p class="max-w-2xl mx-auto mt-4 text-gray-600">As you control your own assets, security is paramount. This section covers advanced methods for securing funds, like Multisig wallets, and techniques for enhancing privacy, like mixers.</p>
+                <h2 class="text-3xl md:text-4xl font-bold section-title">The Marketplace: Decentralized Exchanges (DEXs)</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto">DEXs allow users to trade crypto directly from their wallets without an intermediary. This offers more control but also more responsibility.</p>
             </div>
-            <div class="grid md:grid-cols-2 gap-8 items-start">
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">Multisig Custody: No Single Point of Failure</h3>
-                    <p class="mb-6 text-gray-600">A multisignature (multisig) wallet requires more than one key to authorize a transaction. This distributes control and eliminates the risk of a single key being lost or compromised. For example, a "2-of-3" wallet requires any two of its three designated keys to sign a transaction.</p>
-                     <div class="card">
-                        <h4 class="font-semibold text-lg mb-4 text-center">Visualizing Multisig</h4>
-                        <div class="chart-container">
-                             <canvas id="multisigChart"></canvas>
+            <div class="grid md:grid-cols-2 gap-10 items-start">
+                <div class="card">
+                    <h3 class="font-bold text-xl text-center mb-4">Dominant DEX Architectures</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">Automated Market Makers (AMMs), which use liquidity pools instead of traditional order books, are the most common type of DEX.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="dexTypesChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                     <h3 class="font-bold text-xl text-center mb-4">DEX vs. CEX: Key Differences</h3>
+                     <p class="text-sm text-gray-500 text-center mb-6">Centralized Exchanges (CEXs) like Coinbase are user-friendly but custodial. DEXs offer self-custody but are more complex.</p>
+                     <div class="space-y-4">
+                        <div class="text-center">
+                             <h4 class="font-semibold">Asset Control</h4>
+                             <div class="grid grid-cols-2 gap-2 text-sm mt-1">
+                                <div class="bg-blue-50 palette-text-darkest p-2 rounded-lg">You hold your keys (DEX)</div>
+                                <div class="bg-gray-100 p-2 rounded-lg">Exchange holds keys (CEX)</div>
+                             </div>
                         </div>
-                        <div class="flex justify-center gap-2 mt-4">
-                            <button onclick="updateMultisigChart(2, 3)" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">2-of-3</button>
-                            <button onclick="updateMultisigChart(3, 5)" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">3-of-5</button>
+                        <div class="text-center">
+                             <h4 class="font-semibold">Privacy</h4>
+                             <div class="grid grid-cols-2 gap-2 text-sm mt-1">
+                                <div class="bg-blue-50 palette-text-darkest p-2 rounded-lg">Anonymous (DEX)</div>
+                                <div class="bg-gray-100 p-2 rounded-lg">Requires ID (CEX)</div>
+                             </div>
+                        </div>
+                         <div class="text-center">
+                             <h4 class="font-semibold">Security Model</h4>
+                             <div class="grid grid-cols-2 gap-2 text-sm mt-1">
+                                <div class="bg-blue-50 palette-text-darkest p-2 rounded-lg">User Responsibility</div>
+                                <div class="bg-gray-100 p-2 rounded-lg">Corporate Responsibility</div>
+                             </div>
                         </div>
                      </div>
                 </div>
-                 <div>
-                    <h3 class="text-2xl font-bold mb-4">Crypto Mixers: Enhancing Privacy</h3>
-                    <p class="mb-6 text-gray-600">While Bitcoin is pseudonymous, all transactions are public. Mixers (or tumblers) are services that obscure the trail of transactions by mixing one user's coins with those of many others. This enhances privacy but is also controversial due to its use in illicit activities.</p>
-                    <div class="card">
-                        <h4 class="font-semibold text-lg mb-2">The Mixing Process</h4>
-                        <div class="flex items-center justify-between p-4">
-                            <div class="text-center">
-                                <p>Your Coins</p>
-                                <div class="text-3xl">🪙</div>
-                            </div>
-                             <div class="text-3xl text-gray-400">→</div>
-                             <div class="text-center bg-gray-100 p-4 rounded-lg">
-                                <p>Mixer Pool</p>
-                                <div class="text-3xl">🌪️</div>
-                             </div>
-                             <div class="text-3xl text-gray-400">→</div>
-                             <div class="text-center">
-                                <p>New Address</p>
-                                <div class="text-3xl">✨</div>
-                             </div>
+            </div>
+        </section>
+        
+        <section class="my-20 md:my-28">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title">Advanced Tools: Privacy & Interoperability</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto">As the ecosystem grows, so do the tools for privacy (Mixers) and for trading assets between different blockchains (Atomic Swaps & Bridges).</p>
+            </div>
+             <div class="grid md:grid-cols-2 gap-10">
+                <div class="card">
+                     <h3 class="font-bold text-xl text-center mb-4">Crypto Mixers (Tumblers)</h3>
+                     <p class="text-sm text-gray-500 text-center mb-6">Mixers enhance privacy by breaking the on-chain link between a sender and receiver.</p>
+                     <div class="flex items-center justify-around text-center">
+                        <div>
+                             <p class="font-semibold">Inputs</p>
+                             <p class="text-4xl">👥</p>
+                             <p class="text-xs text-gray-500">Multiple users send funds</p>
                         </div>
-                        <p class="text-xs text-gray-500 mt-2"><strong>Warning:</strong> Using mixers carries risks, including potential theft from centralized services and legal scrutiny. They are heavily regulated in many jurisdictions.</p>
+                        <div class="text-4xl font-thin text-gray-300">→</div>
+                        <div>
+                             <p class="font-semibold">Mixing Pool</p>
+                             <p class="text-4xl">🌪️</p>
+                             <p class="text-xs text-gray-500">Funds are pooled & mixed</p>
+                        </div>
+                        <div class="text-4xl font-thin text-gray-300">→</div>
+                         <div>
+                             <p class="font-semibold">Outputs</p>
+                             <p class="text-4xl">✨</p>
+                             <p class="text-xs text-gray-500">"Clean" coins sent to new addresses</p>
+                        </div>
+                     </div>
+                </div>
+                 <div class="card">
+                    <h3 class="font-bold text-xl text-center mb-4">Moving Between Chains</h3>
+                    <p class="text-sm text-gray-500 text-center mb-4">Atomic Swaps and Cross-Chain Bridges both solve interoperability, but with different security trade-offs.</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="swapsVsBridgesChart"></canvas>
                     </div>
                 </div>
             </div>
         </section>
 
-    </main>
-
-    <footer class="bg-gray-100 border-t mt-16">
-        <div class="container mx-auto py-6 px-4 text-center text-gray-500">
-            <p>&copy; 2025 Decentralized World. An interactive educational resource.</p>
-            <p class="text-xs mt-2">This application is for informational purposes only and does not constitute financial advice.</p>
-        </div>
-    </footer>
+        <section class="my-20 md:my-28">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold section-title">Fort Knox Security: Multisig Wallets</h2>
+                <p class="mt-3 text-gray-600 max-w-2xl mx-auto">For serious security, Multisignature (Multisig) wallets eliminate single points of failure by requiring multiple keys to approve a transaction.</p>
+            </div>
+            <div class="card">
+                <h3 class="font-bold text-xl text-center mb-4">Single-Key vs. Multisig Security</h3>
+                <p class="text-sm text-gray-500 text-center mb-4">A multisig setup dramatically improves resilience against theft and key loss compared to a standard wallet.</p>
+                <div class="chart-container">
+                    <canvas id="multisigBenefitChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const contentSections = document.querySelectorAll('.content-section');
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
+        (function() {
+            const chartColors = {
+                darkest: '#003587',
+                dark: '#0053A1',
+                medium: '#0072BB',
+                light: '#008DD5',
+                lightest: '#00A1E4',
+                gray: '#e5e7eb'
+            };
 
-            function navigateTo(hash) {
-                const targetHash = hash.startsWith('#') ? hash : `#${hash}`;
-                const targetSection = document.querySelector(targetHash);
-                
-                contentSections.forEach(section => {
-                    section.classList.remove('active');
-                });
-                if(targetSection) {
-                    targetSection.classList.add('active');
-                } else {
-                    document.getElementById('home').classList.add('active');
-                }
-
-                navLinks.forEach(link => {
-                    if (link.getAttribute('href') === targetHash) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
+            function wrapLabels(label) {
+                const max_width = 16;
+                const words = label.split(' ');
+                let lines = [];
+                let current_line = '';
+                for (let i = 0; i < words.length; i++) {
+                    const word = words[i];
+                    if ((current_line + word).length > max_width) {
+                        lines.push(current_line.trim());
+                        current_line = '';
                     }
-                });
-                window.scrollTo(0, 0);
+                    current_line += word + ' ';
+                }
+                lines.push(current_line.trim());
+                return lines;
             }
             
-            window.navigateTo = navigateTo;
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
 
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetHash = this.getAttribute('href');
-                    navigateTo(targetHash);
-                    history.pushState(null, null, targetHash);
-                    if(mobileMenu.classList.contains('block')) {
-                       mobileMenu.classList.remove('block');
-                       mobileMenu.classList.add('hidden');
+            const defaultChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                           font: { size: 12 },
+                           padding: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
                     }
-                });
-            });
-
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                mobileMenu.classList.toggle('block');
-            });
-
-            const initialHash = window.location.hash || '#home';
-            navigateTo(initialHash);
-            
-            // Blockchain Animation
-            const playAnimationBtn = document.getElementById('play-animation-btn');
-            const blocks = document.querySelectorAll('.blockchain-animation .block');
-            playAnimationBtn.addEventListener('click', () => {
-                blocks.forEach(block => block.classList.remove('visible'));
-                let delay = 0;
-                blocks.forEach(block => {
-                    setTimeout(() => {
-                        block.classList.add('visible');
-                    }, delay);
-                    delay += 300;
-                });
-            });
-
-            // Atomic Swap Interaction
-            let currentSwapStep = 1;
-            const totalSwapSteps = 5;
-            const prevSwapBtn = document.getElementById('prev-swap-step');
-            const nextSwapBtn = document.getElementById('next-swap-step');
-
-            function updateSwapStep() {
-                document.querySelectorAll('.atomic-swap-step').forEach(step => step.classList.remove('active'));
-                document.getElementById(`swap-step-${currentSwapStep}`).classList.add('active');
-                prevSwapBtn.disabled = currentSwapStep === 1;
-                nextSwapBtn.disabled = currentSwapStep === totalSwapSteps;
-            }
-
-            nextSwapBtn.addEventListener('click', () => {
-                if (currentSwapStep < totalSwapSteps) {
-                    currentSwapStep++;
-                    updateSwapStep();
                 }
-            });
-
-            prevSwapBtn.addEventListener('click', () => {
-                if (currentSwapStep > 1) {
-                    currentSwapStep--;
-                    updateSwapStep();
-                }
-            });
-            updateSwapStep();
+            };
             
-            // Comparison Interaction
-            const compButtons = document.querySelectorAll('.comp-btn');
-            const dexCol = document.getElementById('dex-col');
-            const cexCol = document.getElementById('cex-col');
-
-            compButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const criteria = button.textContent;
-                    
-                    document.querySelectorAll('#dex-col li, #cex-col li').forEach(li => {
-                        li.classList.remove('font-bold', 'text-black', 'bg-yellow-200', 'rounded-md', 'p-2');
-                    });
-                    
-                    dexCol.style.borderColor = 'transparent';
-                    cexCol.style.borderColor = 'transparent';
-
-                    document.querySelectorAll(`li[data-comp="${criteria}"]`).forEach(li => {
-                        li.classList.add('font-bold', 'text-black', 'bg-yellow-200', 'rounded-md', 'p-2');
-                        if (li.parentElement.parentElement === dexCol) dexCol.style.borderColor = '#FBBF24';
-                        if (li.parentElement.parentElement === cexCol) cexCol.style.borderColor = '#FBBF24';
-                    });
-                });
-            });
-
-            // Multisig Chart
-            let multisigChartInstance;
-            const multisigCanvas = document.getElementById('multisigChart').getContext('2d');
-            
-            window.updateMultisigChart = function(required, total) {
-                if (multisigChartInstance) {
-                    multisigChartInstance.destroy();
-                }
-
-                const data = {
-                    labels: ['Required Signatures', 'Unused Signatures'],
+            new Chart(document.getElementById('dexTypesChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['AMM DEXs', 'Order Book DEXs', 'Aggregators'],
                     datasets: [{
-                        data: [required, total - required],
-                        backgroundColor: ['#2563EB', '#D1D5DB'],
-                        borderColor: '#FDFBF8',
+                        label: 'DEX Market Share',
+                        data: [75, 15, 10],
+                        backgroundColor: [chartColors.dark, chartColors.medium, chartColors.lightest],
+                        borderColor: '#f8fafc',
                         borderWidth: 4,
                         hoverOffset: 4
                     }]
-                };
+                },
+                options: { ...defaultChartOptions, cutout: '50%' }
+            });
 
-                const options = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                        },
-                        tooltip: {
-                             callbacks: {
-                                label: function(context) {
-                                    return ` ${context.label}: ${context.raw}`;
-                                }
+            new Chart(document.getElementById('swapsVsBridgesChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Security (Decentralization)', 'Compatibility (Flexibility)'],
+                    datasets: [{
+                        label: 'Atomic Swaps',
+                        data: [9, 4],
+                        backgroundColor: chartColors.dark,
+                        borderColor: chartColors.dark,
+                        borderWidth: 1
+                    }, {
+                        label: 'Cross-Chain Bridges',
+                        data: [5, 9],
+                        backgroundColor: chartColors.lightest,
+                        borderColor: chartColors.lightest,
+                        borderWidth: 1
+                    }]
+                },
+                options: { ...defaultChartOptions,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: {
+                                stepSize: 1
+                            },
+                             grid: {
+                                color: '#e5e7eb'
                             }
                         },
-                        title: {
-                            display: true,
-                            text: `${required}-of-${total} Multisig Setup`,
-                            font: { size: 16 }
+                        x: {
+                             grid: {
+                                display: false
+                            }
                         }
                     },
-                    cutout: '60%'
-                };
+                    plugins: {
+                        ...defaultChartOptions.plugins,
+                        title: {
+                            display: true,
+                            text: 'Interoperability Method Ratings (out of 10)',
+                            font: { size: 14, weight: 'bold' },
+                            padding: { bottom: 10 }
+                        }
+                    }
+                }
+            });
 
-                multisigChartInstance = new Chart(multisigCanvas, {
-                    type: 'doughnut',
-                    data: data,
-                    options: options
-                });
-            }
-            updateMultisigChart(2, 3);
-        });
+            new Chart(document.getElementById('multisigBenefitChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Resistance to Theft', 'Resilience to Key Loss', 'Internal Control'],
+                    datasets: [{
+                        label: 'Single-Key Wallet',
+                        data: [4, 1, 2],
+                        backgroundColor: chartColors.lightest,
+                    }, {
+                        label: 'Multisig Wallet',
+                        data: [9, 8, 9],
+                        backgroundColor: chartColors.dark,
+                    }]
+                },
+                options: { ...defaultChartOptions,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: {
+                                stepSize: 1
+                            },
+                            grid: {
+                                color: '#e5e7eb'
+                            }
+                        },
+                         y: {
+                            ticks: {
+                                callback: function(value) {
+                                    const label = this.getLabelForValue(value);
+                                    return label.length > 20 ? label.substring(0, 20) + '...' : label;
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                     plugins: {
+                        ...defaultChartOptions.plugins,
+                        title: {
+                            display: true,
+                            text: 'Wallet Security Ratings (out of 10)',
+                            font: { size: 14, weight: 'bold' },
+                            padding: { bottom: 10 }
+                        }
+                    }
+                }
+            });
+        })();
     </script>
+
 </body>
 </html>
